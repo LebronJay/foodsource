@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<!--用户信息-->
+<mapper namespace="com.colin.foodsource.dao.UserMapper">
+    <select id="getLoginNameByUserId" parameterType="java.lang.String"  resultType="java.lang.String">
+        SELECT login_name from db_user where user_id=#{userId}
+    </select>
+
+    <select id="getAllUser" resultType="com.colin.foodsource.model.User">
+        SELECT * from db_user
+    </select>
+</mapper>
