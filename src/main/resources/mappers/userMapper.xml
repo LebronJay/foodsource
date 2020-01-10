@@ -5,11 +5,50 @@
 
 <!--用户信息-->
 <mapper namespace="com.colin.foodsource.dao.UserMapper">
+
+    <!--根据用户id获取登录名称-->
     <select id="getLoginNameByUserId" parameterType="java.lang.String"  resultType="java.lang.String">
         SELECT login_name from db_user where user_id=#{userId}
     </select>
 
+    <!--获取所有用户-->
     <select id="getAllUser" resultType="com.colin.foodsource.model.User">
-        SELECT * from db_user
+        select
+        user_id userId,
+        login_name loginName,
+        passwd	passwd,
+        nick_name nickname,
+        tel tel,
+        email email,
+        gender gender,
+        head_pic headPic,
+        birth_date birthDate,
+        introduction introduction,
+        location_addr locationAddr,
+        graduate_school graduateSchool,
+        permission permission,
+        state state,
+        input_date inputDate,
+        last_mod_date lastModDate
+        from db_user
+    </select>
+
+    <!--登录-->
+    <select id="login" resultType="com.colin.foodsource.model.view.UserInfo">
+        select
+        user_id userId,
+        login_name loginName,
+        passwd	passwd,
+        nick_name nickname,
+        tel tel,
+        email email,
+        gender gender,
+        head_pic headPic,
+        birth_date birthDate,
+        introduction introduction,
+        location_addr locationAddr,
+        graduate_school graduateSchool,
+        from db_user
+        where login_name=#{loginName} and passwd = #{passwd} and state = '0'
     </select>
 </mapper>

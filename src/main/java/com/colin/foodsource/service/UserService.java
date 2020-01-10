@@ -1,6 +1,7 @@
 package com.colin.foodsource.service;
 
 import com.colin.foodsource.model.User;
+import com.colin.foodsource.model.view.UserInfo;
 
 import java.util.List;
 
@@ -27,4 +28,14 @@ public interface UserService {
     * @date  2020/1/9 0009 下午 1:52
     */
     List<User> getAllUser();
+
+    /**
+    * 登录
+    * @param loginName
+    * @param passwd
+    * @return  com.colin.foodsource.model.view.UserInfo
+    * @author  Colin
+    * @date  2020/1/10 0010 上午 9:42
+    */
+    UserInfo login(String loginName, String passwd);
 }

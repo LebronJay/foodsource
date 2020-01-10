@@ -2,16 +2,16 @@ package com.colin.foodsource.controller;
 
 import com.colin.foodsource.common.utils.JackSonUtils;
 import com.colin.foodsource.model.User;
+import com.colin.foodsource.model.view.UserInfo;
 import com.colin.foodsource.service.UserService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.ui.ExtendedModelMap;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -47,8 +47,22 @@ public class UserController {
     */
     @RequestMapping(value = "/getAllUser" , method = RequestMethod.GET)
     public String getAllUser() throws JsonProcessingException {
-        Model model = new ExtendedModelMap();
         List<User> allUser = userService.getAllUser();
         return JackSonUtils.object2Json(allUser);
+    }
+
+    /**
+    * 登录
+    * @param request
+    * @return  java.lang.String
+    * @author  Colin
+    * @date  2020/1/10 0010 上午 9:49
+    */
+    @RequestMapping(value = "/login" , method = RequestMethod.POST)
+    public String login(HttpServletRequest request) throws JsonProcessingException {
+        String loginName = request.getParameter("loginName");
+        String passwd = request.getParameter("passwd");
+        UserInfo login = userService.login(loginName, passwd);
+        return JackSonUtils.object2Json(login);
     }
 }

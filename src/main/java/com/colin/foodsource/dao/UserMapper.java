@@ -1,7 +1,9 @@
 package com.colin.foodsource.dao;
 
 import com.colin.foodsource.model.User;
+import com.colin.foodsource.model.view.UserInfo;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -31,4 +33,16 @@ public interface UserMapper {
     * @date  2020/1/9 0009 下午 1:50
     */
     List<User> getAllUser();
+
+    /**
+    * 登录
+    * @param loginName
+    * @param passwd
+    * @return  com.colin.foodsource.model.view.UserInfo
+    * @author  Colin
+    * @date  2020/1/10 0010 上午 9:41
+    */
+    UserInfo login(@Param("loginName") String loginName,@Param("passwd") String passwd);
+
+
 }

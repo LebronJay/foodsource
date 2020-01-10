@@ -2,6 +2,7 @@ package com.colin.foodsource.service.impl;
 
 import com.colin.foodsource.dao.UserMapper;
 import com.colin.foodsource.model.User;
+import com.colin.foodsource.model.view.UserInfo;
 import com.colin.foodsource.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,5 +33,11 @@ public class UserServiceImpl implements UserService{
     public List<User> getAllUser() {
         List<User> allUser = userMapper.getAllUser();
         return allUser;
+    }
+
+    @Override
+    public UserInfo login(String loginName, String passwd) {
+        UserInfo login = userMapper.login(loginName, passwd);
+        return login;
     }
 }

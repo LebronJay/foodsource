@@ -1,12 +1,12 @@
-package com.colin.foodsource.model;
+package com.colin.foodsource.model.view;
 
 import java.util.Date;
 
 /**
- * @Description: 用户
- * Created by Colin on 2020/1/9 0009 上午 10:24.
+ * @Description: 用户信息
+ * Created by Colin on 2020/1/10 0010 上午 9:24.
  */
-public class User {
+public class UserInfo {
 
     private String userId;//用户编号
     private String loginName;//登录名称
@@ -20,10 +20,6 @@ public class User {
     private String introduction;//简介
     private String locationAddr;//所在地
     private String graduateSchool;//毕业院校
-    private String permission;//权限状态
-    private String state;//状态
-    private Date inputDate;//录入时间
-    private Date lastModDate;//修改时间
 
     public String getUserId() {
         return userId;
@@ -119,37 +115,5 @@ public class User {
 
     public void setGraduateSchool(String graduateSchool) {
         this.graduateSchool = graduateSchool;
-    }
-
-    public String getPermission() {
-        return permission;
-    }
-
-    public void setPermission(String permission) {
-        this.permission = permission;
-    }
-
-    public String getState() {
-        return state;
-    }
-
-    public void setState(String state) {
-        this.state = state;
-    }
-
-    public Date getInputDate() {
-        return inputDate;
-    }
-
-    public void setInputDate(Date inputDate) {
-        this.inputDate = inputDate;
-    }
-
-    public Date getLastModDate() {
-        return lastModDate;
-    }
-
-    public void setLastModDate(Date lastModDate) {
-        this.lastModDate = lastModDate;
     }
 }
