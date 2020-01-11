@@ -6,16 +6,13 @@ import com.colin.foodsource.model.view.UserInfo;
 import com.colin.foodsource.service.UserService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
- * @Description: TODO
+ * @Description: 用户信息控制器
  * Created by Colin on 2020/1/9 0009 上午 10:59.
  */
 @RestController
@@ -59,9 +56,7 @@ public class UserController {
     * @date  2020/1/10 0010 上午 9:49
     */
     @RequestMapping(value = "/login" , method = RequestMethod.POST)
-    public String login(HttpServletRequest request) throws JsonProcessingException {
-        String loginName = request.getParameter("loginName");
-        String passwd = request.getParameter("passwd");
+    public String login(@RequestParam(value = "loginName",required = false) String loginName,@RequestParam(value = "passwd",required = false) String passwd) throws JsonProcessingException {
         UserInfo login = userService.login(loginName, passwd);
         return JackSonUtils.object2Json(login);
     }
