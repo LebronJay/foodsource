@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.util.List;
 
@@ -16,7 +17,7 @@ import java.util.List;
  * Created by Colin on 2020/1/9 0009 上午 10:50.
  */
 @Service
-public class UserServiceImpl implements UserService{
+public class UserServiceImpl implements UserService {
 
     protected Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
 
@@ -39,5 +40,44 @@ public class UserServiceImpl implements UserService{
     public UserInfo login(String loginName, String passwd) {
         UserInfo login = userMapper.login(loginName, passwd);
         return login;
+    }
+
+    @Override
+    public boolean updatePassword(String userId, String newPassword, String oldPassword) {
+        return userMapper.updatePassword(userId, newPassword, oldPassword);
+    }
+
+    @Override
+    public Integer countUserByIdAndPasswd(String userId, String passwd) {
+        return userMapper.countUserByIdAndPasswd(userId, passwd);
+    }
+
+    /**
+     * 修改密码
+     *
+     * @param userId
+     * @param newPassword
+     * @param oldPassword
+     * @return java.lang.String
+     * @author Colin
+     * @date 2020/1/13 0013 下午 2:05
+     */
+    public String updateNewPassword(String userId, String newPassword, String oldPassword) {
+        String loginNameByUserId = userMapper.getLoginNameByUserId(userId);
+        if (StringUtils.isEmpty(loginNameByUserId)) {
+            return "no_user";
+        } else {
+            Integer userCount = countUserByIdAndPasswd(userId, oldPassword);
+            if (userCount == null || userCount.intValue() == 0) {
+                return "password_error";
+            } else {
+                boolean result = updatePassword(userId, newPassword, oldPassword);
+                if (result){
+                    return "success";
+                }else{
+                    return "fail";
+                }
+            }
+        }
     }
 }

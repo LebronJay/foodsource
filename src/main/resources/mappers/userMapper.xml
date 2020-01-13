@@ -51,4 +51,13 @@
         from db_user
         where state = '0' and login_name=#{loginName} and passwd = #{passwd}
     </select>
+
+    <!--修改密码-->
+    <update id="updatePassword">
+        update db_user SET passwd = #{newPassword} where user_id = #{userId} and passwd = #{oldPassword}
+    </update>
+
+    <select id="countUserByIdAndPasswd" resultType='java.lang.Integer'>
+        select count(1) from db_user where user_id = #{userId} and passwd = #{passwd}
+    </select>
 </mapper>

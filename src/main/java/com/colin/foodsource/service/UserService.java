@@ -12,30 +12,68 @@ import java.util.List;
 public interface UserService {
 
     /**
-    * 根据用户id获取登录名称
-    * @param userId
-    * @return  java.lang.String
-    * @author  Colin
-    * @date  2020/1/9 0009 上午 10:46
-    */
+     * 根据用户id获取登录名称
+     *
+     * @param userId
+     * @return java.lang.String
+     * @author Colin
+     * @date 2020/1/9 0009 上午 10:46
+     */
     String getLoginNameByUserId(String userId);
 
     /**
-    * 获取所有用户
-    * @param
-    * @return  java.util.List<com.colin.foodsource.model.User>
-    * @author  Colin
-    * @date  2020/1/9 0009 下午 1:52
-    */
+     * 获取所有用户
+     *
+     * @param
+     * @return java.util.List<com.colin.foodsource.model.User>
+     * @author Colin
+     * @date 2020/1/9 0009 下午 1:52
+     */
     List<User> getAllUser();
 
     /**
-    * 登录
-    * @param loginName
-    * @param passwd
-    * @return  com.colin.foodsource.model.view.UserInfo
-    * @author  Colin
-    * @date  2020/1/10 0010 上午 9:42
-    */
+     * 登录
+     *
+     * @param loginName
+     * @param passwd
+     * @return com.colin.foodsource.model.view.UserInfo
+     * @author Colin
+     * @date 2020/1/10 0010 上午 9:42
+     */
     UserInfo login(String loginName, String passwd);
+
+    /**
+     * 修改密码
+     *
+     * @param userId
+     * @param newPassword
+     * @param oldPassword
+     * @return boolean
+     * @author Colin
+     * @date 2020/1/13 0013 下午 1:50
+     */
+    boolean updatePassword(String userId, String newPassword, String oldPassword);
+
+    /**
+     * 根据用户ID和密码查询用户是否存在
+     *
+     * @param userId
+     * @param passwd
+     * @return java.lang.Integer
+     * @author Colin
+     * @date 2020/1/13 0013 下午 1:51
+     */
+    Integer countUserByIdAndPasswd(String userId, String passwd);
+
+    /**
+     * 修改密码业务处理
+     *
+     * @param userId
+     * @param newPassword
+     * @param oldPassword
+     * @return java.lang.String
+     * @author Colin
+     * @date 2020/1/13 0013 下午 4:31
+     */
+    String updateNewPassword(String userId, String newPassword, String oldPassword);
 }

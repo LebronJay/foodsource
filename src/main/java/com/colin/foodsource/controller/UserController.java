@@ -8,8 +8,8 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @Description: 用户信息控制器
@@ -23,41 +23,61 @@ public class UserController {
     private UserService userService;
 
     /**
-    * 根据用户id获取登录名称
-    * @param userId
-    * @return  java.lang.String
-    * @author  Colin
-    * @date  2020/1/9 0009 上午 11:15
-    */
-    @RequestMapping(value = "/getLoginName/{userId}" , method = RequestMethod.GET)
+     * 根据用户id获取登录名称
+     *
+     * @param userId
+     * @return java.lang.String
+     * @author Colin
+     * @date 2020/1/9 0009 上午 11:15
+     */
+    @RequestMapping(value = "/getLoginName/{userId}", method = RequestMethod.GET)
     public String getLoginNameByUserId(@PathVariable("userId") String userId) throws JsonProcessingException {
         String loginName = userService.getLoginNameByUserId(userId);
         return JackSonUtils.object2Json(loginName);
     }
 
     /**
-    * 获取所有用户
-    * @param
-    * @return  java.lang.String
-    * @author  Colin
-    * @date  2020/1/9 0009 下午 3:29
-    */
-    @RequestMapping(value = "/getAllUser" , method = RequestMethod.GET)
+     * 获取所有用户
+     *
+     * @param
+     * @return java.lang.String
+     * @author Colin
+     * @date 2020/1/9 0009 下午 3:29
+     */
+    @RequestMapping(value = "/getAllUser", method = RequestMethod.GET)
     public String getAllUser() throws JsonProcessingException {
         List<User> allUser = userService.getAllUser();
         return JackSonUtils.object2Json(allUser);
     }
 
     /**
-    * 登录
-    * @param request
-    * @return  java.lang.String
-    * @author  Colin
-    * @date  2020/1/10 0010 上午 9:49
-    */
-    @RequestMapping(value = "/login" , method = RequestMethod.POST)
-    public String login(@RequestParam(value = "loginName",required = false) String loginName,@RequestParam(value = "passwd",required = false) String passwd) throws JsonProcessingException {
+     * 登录
+     *
+     * @param loginName,passwd
+     * @return java.lang.String
+     * @author Colin
+     * @date 2020/1/10 0010 上午 9:49
+     */
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    public String login(@RequestParam(value = "loginName", required = false) String loginName, @RequestParam(value = "passwd", required = false) String passwd) throws JsonProcessingException {
         UserInfo login = userService.login(loginName, passwd);
         return JackSonUtils.object2Json(login);
+    }
+
+    /**
+     * 修改密码
+     *
+     * @param data
+     * @return java.lang.String
+     * @author Colin
+     * @date 2020/1/13 0013 下午 4:32
+     */
+    @RequestMapping(value = "/updatePassword", method = RequestMethod.POST)
+    public String updatePassword(@RequestBody Map<String, Object> data) {
+        String userId = data.get("userId").toString();
+        String newPassword = data.get("newPassword").toString();
+        String oldPassword = data.get("oldPassword").toString();
+        String result = userService.updateNewPassword(userId, newPassword, oldPassword);
+        return result;
     }
 }
