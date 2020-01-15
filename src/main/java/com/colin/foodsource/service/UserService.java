@@ -2,6 +2,7 @@ package com.colin.foodsource.service;
 
 import com.colin.foodsource.model.User;
 import com.colin.foodsource.model.view.UserInfo;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -10,6 +11,16 @@ import java.util.List;
  * Created by Colin on 2020/1/9 0009 上午 10:44.
  */
 public interface UserService {
+
+    /**
+     * 添加用户
+     *
+     * @param user
+     * @return boolean
+     * @author Colin
+     * @date 2020/1/15 0015 下午 1:39
+     */
+    String addUser(User user);
 
     /**
      * 根据用户id获取登录名称
@@ -76,4 +87,14 @@ public interface UserService {
      * @date 2020/1/13 0013 下午 4:31
      */
     String updateNewPassword(String userId, String newPassword, String oldPassword);
+
+    /**
+     * 根据用户id删除用户
+     *
+     * @param userId
+     * @return boolean
+     * @author Colin
+     * @date 2020/1/15 0015 下午 1:39
+     */
+    String deleteUserByUserId(@Param("userId") String userId);
 }

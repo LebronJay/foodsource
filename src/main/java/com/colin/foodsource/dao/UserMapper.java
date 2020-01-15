@@ -17,6 +17,16 @@ import java.util.List;
 public interface UserMapper {
 
     /**
+     * 添加用户
+     *
+     * @param user
+     * @return boolean
+     * @author Colin
+     * @date 2020/1/15 0015 下午 1:18
+     */
+    boolean addUser(User user);
+
+    /**
      * 根据用户id获取登录名称
      *
      * @param userId
@@ -70,5 +80,13 @@ public interface UserMapper {
      */
     Integer countUserByIdAndPasswd(@Param("userId") String userId, @Param("passwd") String passwd);
 
-
+    /**
+     * 根据用户id删除用户
+     *
+     * @param userId
+     * @return boolean
+     * @author Colin
+     * @date 2020/1/15 0015 下午 1:37
+     */
+    boolean deleteUserByUserId(@Param("userId") String userId);
 }

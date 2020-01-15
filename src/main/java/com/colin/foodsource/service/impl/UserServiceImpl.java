@@ -1,5 +1,6 @@
 package com.colin.foodsource.service.impl;
 
+import com.colin.foodsource.common.utils.RandomUtils;
 import com.colin.foodsource.dao.UserMapper;
 import com.colin.foodsource.model.User;
 import com.colin.foodsource.model.view.UserInfo;
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -23,6 +25,24 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserMapper userMapper;
+
+    @Override
+    public String addUser(User user) {
+        String result = "";
+        if (StringUtils.isEmpty(user.getPermission())) {
+            user.setPermission("0");
+        }
+        user.setUserId(RandomUtils.getUUID());
+        user.setInputDate(new Date());
+        user.setLastModDate(new Date());
+        boolean addUser = userMapper.addUser(user);
+        if (addUser) {
+            result = "success";
+        } else {
+            result = "fail";
+        }
+        return result;
+    }
 
     @Override
     public String getLoginNameByUserId(String userId) {
@@ -72,12 +92,28 @@ public class UserServiceImpl implements UserService {
                 return "password_error";
             } else {
                 boolean result = updatePassword(userId, newPassword, oldPassword);
-                if (result){
+                if (result) {
                     return "success";
-                }else{
+                } else {
                     return "fail";
                 }
             }
         }
+    }
+
+    @Override
+    public String deleteUserByUserId(String userId) {
+        String loginNameByUserId = userMapper.getLoginNameByUserId(userId);
+        if (StringUtils.isEmpty(loginNameByUserId)) {
+            return "no_user";
+        }
+        String result = "";
+        boolean delete = userMapper.deleteUserByUserId(userId);
+        if (delete) {
+            result = "success";
+        } else {
+            result = "fail";
+        }
+        return result;
     }
 }

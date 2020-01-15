@@ -6,8 +6,46 @@
 <!--用户信息-->
 <mapper namespace="com.colin.foodsource.dao.UserMapper">
 
+    <!--添加用户-->
+    <insert id="addUser" parameterType="com.colin.foodsource.model.User">
+        insert into db_user (
+        user_id,
+        login_name,
+        passwd,
+        nick_name,
+        tel,
+        email,
+        gender,
+        head_pic,
+        birth_date,
+        introduction,
+        location_addr,
+        graduate_school,
+        permission,
+        input_date,
+        last_mod_date
+        )
+        VALUES (
+        #{userId,jdbcType=VARCHAR},
+        #{loginName,jdbcType=VARCHAR},
+        #{passwd,jdbcType=VARCHAR},
+        #{nickname,jdbcType=VARCHAR},
+        #{tel,jdbcType=VARCHAR},
+        #{email,jdbcType=VARCHAR},
+        #{gender,jdbcType=INTEGER},
+        #{headPic,jdbcType=VARCHAR},
+        #{birthDate},
+        #{introduction,jdbcType=VARCHAR},
+        #{locationAddr,jdbcType=VARCHAR},
+        #{graduateSchool,jdbcType=VARCHAR},
+        #{permission,jdbcType=VARCHAR},
+        #{inputDate},
+        #{lastModDate}
+        )
+    </insert>
+
     <!--根据用户id获取登录名称-->
-    <select id="getLoginNameByUserId" parameterType="java.lang.String"  resultType="java.lang.String">
+    <select id="getLoginNameByUserId" parameterType="java.lang.String" resultType="java.lang.String">
         SELECT login_name from db_user where user_id=#{userId}
     </select>
 
@@ -16,7 +54,7 @@
         select
         user_id userId,
         login_name loginName,
-        passwd	passwd,
+        passwd passwd,
         nick_name nickname,
         tel tel,
         email email,
@@ -38,7 +76,7 @@
         select
         user_id userId,
         login_name loginName,
-        passwd	passwd,
+        passwd passwd,
         nick_name nickname,
         tel tel,
         email email,
@@ -57,7 +95,13 @@
         update db_user SET passwd = #{newPassword} where user_id = #{userId} and passwd = #{oldPassword}
     </update>
 
+    <!--根据用户ID和密码查询用户是否存在(检验密码是否正确)-->
     <select id="countUserByIdAndPasswd" resultType='java.lang.Integer'>
         select count(1) from db_user where user_id = #{userId} and passwd = #{passwd}
     </select>
+
+    <!--根据用户id删除用户-->
+    <delete id="deleteUserByUserId">
+        delete from db_user where user_id = #{userId}
+    </delete>
 </mapper>
