@@ -1,5 +1,6 @@
 package com.colin.foodsource.service.impl;
 
+import com.colin.foodsource.common.Constants;
 import com.colin.foodsource.common.utils.RandomUtils;
 import com.colin.foodsource.dao.UserMapper;
 import com.colin.foodsource.model.User;
@@ -37,9 +38,9 @@ public class UserServiceImpl implements UserService {
         user.setLastModDate(new Date());
         boolean addUser = userMapper.addUser(user);
         if (addUser) {
-            result = "success";
+            result = Constants.SUCCESS;
         } else {
-            result = "fail";
+            result = Constants.FAIL;
         }
         return result;
     }
@@ -85,17 +86,17 @@ public class UserServiceImpl implements UserService {
     public String updateNewPassword(String userId, String newPassword, String oldPassword) {
         String loginNameByUserId = userMapper.getLoginNameByUserId(userId);
         if (StringUtils.isEmpty(loginNameByUserId)) {
-            return "no_user";
+            return Constants.NO_USER;
         } else {
             Integer userCount = countUserByIdAndPasswd(userId, oldPassword);
             if (userCount == null || userCount.intValue() == 0) {
-                return "password_error";
+                return Constants.WRONG_PASSWORD;
             } else {
                 boolean result = updatePassword(userId, newPassword, oldPassword);
                 if (result) {
-                    return "success";
+                    return Constants.SUCCESS;
                 } else {
-                    return "fail";
+                    return Constants.FAIL;
                 }
             }
         }
@@ -105,14 +106,14 @@ public class UserServiceImpl implements UserService {
     public String deleteUserByUserId(String userId) {
         String loginNameByUserId = userMapper.getLoginNameByUserId(userId);
         if (StringUtils.isEmpty(loginNameByUserId)) {
-            return "no_user";
+            return Constants.NO_USER;
         }
         String result = "";
         boolean delete = userMapper.deleteUserByUserId(userId);
         if (delete) {
-            result = "success";
+            result = Constants.SUCCESS;
         } else {
-            result = "fail";
+            result = Constants.FAIL;
         }
         return result;
     }
