@@ -2,6 +2,7 @@ package com.colin.foodsource.service;
 
 import com.colin.foodsource.model.User;
 import com.colin.foodsource.model.view.UserInfo;
+import com.github.pagehelper.PageInfo;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -41,6 +42,16 @@ public interface UserService {
      * @date 2020/1/9 0009 下午 1:52
      */
     List<User> getAllUser();
+
+    /**
+    * 分页查询用户信息
+    * @param pageNum
+    * @param pageSize
+    * @return  java.util.List<com.colin.foodsource.model.User>
+    * @author  Colin
+    * @date  2020/1/19 0019 上午 10:18
+    */
+    PageInfo<User> getUserList(int pageNum, int pageSize);
 
     /**
      * 登录

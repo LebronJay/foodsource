@@ -5,6 +5,7 @@ import com.colin.foodsource.model.User;
 import com.colin.foodsource.model.view.UserInfo;
 import com.colin.foodsource.service.UserService;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -64,6 +65,22 @@ public class UserController {
     public String getAllUser() throws JsonProcessingException {
         List<User> allUser = userService.getAllUser();
         return JackSonUtils.object2Json(allUser);
+    }
+
+    /**
+     * 分页获取用户信息
+     *
+     * @param data
+     * @return java.lang.String
+     * @author Colin
+     * @date 2020/1/19 0019 上午 10:22
+     */
+    @RequestMapping(value = "/getUserList", method = RequestMethod.POST)
+    public String getUserList(@RequestBody Map<String, Object> data) throws JsonProcessingException {
+        int pageNum = (int) data.get("pageNum");
+        int pageSize = (int) data.get("pageSize");
+        PageInfo<User> userList = userService.getUserList(pageNum, pageSize);
+        return JackSonUtils.object2Json(userList);
     }
 
     /**

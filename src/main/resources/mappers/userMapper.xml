@@ -68,7 +68,7 @@
         state state,
         input_date inputDate,
         last_mod_date lastModDate
-        from db_user
+        from db_user order by input_date desc
     </select>
 
     <!--登录-->

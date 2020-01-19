@@ -6,6 +6,9 @@ import com.colin.foodsource.dao.UserMapper;
 import com.colin.foodsource.model.User;
 import com.colin.foodsource.model.view.UserInfo;
 import com.colin.foodsource.service.UserService;
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,6 +58,14 @@ public class UserServiceImpl implements UserService {
     public List<User> getAllUser() {
         List<User> allUser = userMapper.getAllUser();
         return allUser;
+    }
+
+    @Override
+    public PageInfo<User> getUserList(int pageNum, int pageSize) {
+        Page<User> page = PageHelper.startPage(pageNum, pageSize);
+        List<User> userList = userMapper.getAllUser();
+        PageInfo<User> pageInfo = new PageInfo<>(userList);
+        return pageInfo;
     }
 
     @Override
