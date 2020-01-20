@@ -62,9 +62,9 @@ public class UserController {
      * @date 2020/1/9 0009 下午 3:29
      */
     @RequestMapping(value = "/getAllUser", method = RequestMethod.GET)
-    public String getAllUser() throws JsonProcessingException {
+    public List<User> getAllUser() throws JsonProcessingException {
         List<User> allUser = userService.getAllUser();
-        return JackSonUtils.object2Json(allUser);
+        return allUser;
     }
 
     /**
@@ -76,11 +76,11 @@ public class UserController {
      * @date 2020/1/19 0019 上午 10:22
      */
     @RequestMapping(value = "/getUserList", method = RequestMethod.POST)
-    public String getUserList(@RequestBody Map<String, Object> data) throws JsonProcessingException {
+    public PageInfo<User> getUserList(@RequestBody Map<String, Object> data) throws JsonProcessingException {
         int pageNum = (int) data.get("pageNum");
         int pageSize = (int) data.get("pageSize");
         PageInfo<User> userList = userService.getUserList(pageNum, pageSize);
-        return JackSonUtils.object2Json(userList);
+        return userList;
     }
 
     /**
@@ -92,9 +92,9 @@ public class UserController {
      * @date 2020/1/10 0010 上午 9:49
      */
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public String login(@RequestParam(value = "loginName", required = false) String loginName, @RequestParam(value = "passwd", required = false) String passwd) throws JsonProcessingException {
+    public UserInfo login(@RequestParam(value = "loginName", required = false) String loginName, @RequestParam(value = "passwd", required = false) String passwd) throws JsonProcessingException {
         UserInfo login = userService.login(loginName, passwd);
-        return JackSonUtils.object2Json(login);
+        return login;
     }
 
     /**
