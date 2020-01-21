@@ -14,13 +14,19 @@ public class ResponseMessage {
     private String status;
 
     /**
+    * 错误信息
+    */
+    private String error;
+
+    /**
      * 消息体
      */
-    private Map<String,Object> messageBody;
+    private Map<String,Object> data;
 
-    public ResponseMessage(String status, Map<String, Object> messageBody) {
+    public ResponseMessage(String status,String error, Map<String, Object> data) {
         this.status = status;
-        this.messageBody = messageBody;
+        this.error = error;
+        this.data = data;
     }
 
     public String getStatus() {
@@ -31,11 +37,19 @@ public class ResponseMessage {
         this.status = status;
     }
 
-    public Map<String, Object> getMessageBody() {
-        return messageBody;
+    public String getError() {
+        return error;
     }
 
-    public void setMessageBody(Map<String, Object> messageBody) {
-        this.messageBody = messageBody;
+    public void setError(String error) {
+        this.error = error;
+    }
+
+    public Map<String, Object> getData() {
+        return data;
+    }
+
+    public void setData(Map<String, Object> data) {
+        this.data = data;
     }
 }
