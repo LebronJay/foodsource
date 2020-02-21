@@ -1,6 +1,7 @@
 package com.colin.foodsource.controller;
 
 import com.colin.foodsource.common.utils.JackSonUtils;
+import com.colin.foodsource.exception.AppException;
 import com.colin.foodsource.model.User;
 import com.colin.foodsource.model.view.UserInfo;
 import com.colin.foodsource.service.UserService;
@@ -33,7 +34,7 @@ public class UserController {
      * @date 2020/1/15 0015 下午 2:49
      */
     @RequestMapping(value = "/addUser", method = RequestMethod.POST)
-    public String addUser(@RequestBody String json) throws IOException {
+    public String addUser(@RequestBody String json) throws IOException, AppException {
         User user = (User) JackSonUtils.json2Object(json, User.class);
         String result = userService.addUser(user);
         return result;

@@ -1,5 +1,6 @@
 package com.colin.foodsource.service;
 
+import com.colin.foodsource.exception.AppException;
 import com.colin.foodsource.model.User;
 import com.colin.foodsource.model.view.UserInfo;
 import com.github.pagehelper.PageInfo;
@@ -21,7 +22,7 @@ public interface UserService {
      * @author Colin
      * @date 2020/1/15 0015 下午 1:39
      */
-    String addUser(User user);
+    String addUser(User user) throws AppException;
 
     /**
      * 根据用户id获取登录名称

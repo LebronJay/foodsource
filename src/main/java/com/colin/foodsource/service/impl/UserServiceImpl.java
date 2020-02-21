@@ -3,6 +3,7 @@ package com.colin.foodsource.service.impl;
 import com.colin.foodsource.common.Constants;
 import com.colin.foodsource.common.utils.RandomUtils;
 import com.colin.foodsource.dao.UserMapper;
+import com.colin.foodsource.exception.AppException;
 import com.colin.foodsource.model.User;
 import com.colin.foodsource.model.view.UserInfo;
 import com.colin.foodsource.service.UserService;
@@ -31,8 +32,12 @@ public class UserServiceImpl implements UserService {
     private UserMapper userMapper;
 
     @Override
-    public String addUser(User user) {
+    public String addUser(User user) throws AppException {
         String result = "";
+        String loginName = user.getLoginName();
+        if(StringUtils.isEmpty(loginName)){
+            throw new AppException("登录名称不能为空!");
+        }
         if (StringUtils.isEmpty(user.getPermission())) {
             user.setPermission("0");
         }
