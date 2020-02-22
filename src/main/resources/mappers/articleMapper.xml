@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<!--文章信息-->
+<mapper namespace="com.colin.foodsource.dao.ArticleMapper">
+
+    <!--添加文章-->
+    <insert id="addArticle" parameterType="com.colin.foodsource.model.Article">
+        insert into db_article (
+        article_id,
+        article_title,
+        article_tag,
+        article_content,
+        o_id_user,
+        article_state,
+        publish_date,
+        article_img1,
+        article_img2,
+        article_img3,
+        article_img4,
+        article_img5,
+        input_date,
+        last_mod_date
+        )
+        VALUES (
+        #{articleId,jdbcType=VARCHAR},
+        #{articleTitle,jdbcType=VARCHAR},
+        #{articleTag,jdbcType=VARCHAR},
+        #{articleContent,jdbcType=VARCHAR},
+        #{oIdUser,jdbcType=VARCHAR},
+        #{articleState,jdbcType=VARCHAR},
+        #{publishDate},
+        #{articleImg1,jdbcType=VARCHAR},
+        #{articleImg2,jdbcType=VARCHAR},
+        #{articleImg3,jdbcType=VARCHAR},
+        #{articleImg4,jdbcType=VARCHAR},
+        #{articleImg5,jdbcType=VARCHAR},
+        #{inputDate},
+        #{lastModDate}
+        )
+    </insert>
+</mapper>
