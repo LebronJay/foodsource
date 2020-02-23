@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<!--菜品词条信息-->
+<mapper namespace="com.colin.foodsource.dao.FoodEntryMapper">
+
+    <!--添加菜品词条-->
+    <insert id="addArticle" parameterType="com.colin.foodsource.model.FoodEntry">
+        insert into db_food_entry (
+
+        )
+        VALUES (
+
+        )
+    </insert>
+</mapper>
