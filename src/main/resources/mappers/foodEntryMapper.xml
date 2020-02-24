@@ -7,7 +7,7 @@
 <mapper namespace="com.colin.foodsource.dao.FoodEntryMapper">
 
     <!--添加菜品词条-->
-    <insert id="addArticle" parameterType="com.colin.foodsource.model.FoodEntry">
+    <insert id="addFoodEntry" parameterType="com.colin.foodsource.model.FoodEntry">
         insert into db_food_entry (
         food_entry_id,
         entry_name,
