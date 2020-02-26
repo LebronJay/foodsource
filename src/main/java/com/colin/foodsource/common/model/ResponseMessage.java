@@ -11,38 +11,27 @@ public class ResponseMessage {
     /**
      * 状态
      */
-    private String status;
-
-    /**
-    * 错误信息
-    */
-    private String error;
+    private int status;
 
     /**
      * 消息体
      */
     private Map<String,Object> data;
 
-    public ResponseMessage(String status,String error, Map<String, Object> data) {
+    public ResponseMessage(){
+    }
+
+    public ResponseMessage(int status, Map<String, Object> data) {
         this.status = status;
-        this.error = error;
         this.data = data;
     }
 
-    public String getStatus() {
+    public int getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(int status) {
         this.status = status;
-    }
-
-    public String getError() {
-        return error;
-    }
-
-    public void setError(String error) {
-        this.error = error;
     }
 
     public Map<String, Object> getData() {
