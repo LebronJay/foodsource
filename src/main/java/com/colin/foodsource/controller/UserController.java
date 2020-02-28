@@ -8,6 +8,7 @@ import com.colin.foodsource.service.UserService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
@@ -34,9 +35,9 @@ public class UserController {
      * @date 2020/1/15 0015 下午 2:49
      */
     @RequestMapping(value = "/addUser", method = RequestMethod.POST)
-    public String addUser(@RequestBody String json) throws IOException, AppException {
+    public Model addUser(@RequestBody String json) throws IOException, AppException {
         User user = (User) JackSonUtils.json2Object(json, User.class);
-        String result = userService.addUser(user);
+        Model result = userService.addUser(user);
         return result;
     }
 
@@ -107,11 +108,11 @@ public class UserController {
      * @date 2020/1/13 0013 下午 4:32
      */
     @RequestMapping(value = "/updatePassword", method = RequestMethod.POST)
-    public String updatePassword(@RequestBody Map<String, Object> data) {
+    public Model updatePassword(@RequestBody Map<String, Object> data) {
         String userId = data.get("userId").toString();
         String newPassword = data.get("newPassword").toString();
         String oldPassword = data.get("oldPassword").toString();
-        String result = userService.updateNewPassword(userId, newPassword, oldPassword);
+        Model result = userService.updateNewPassword(userId, newPassword, oldPassword);
         return result;
     }
 
