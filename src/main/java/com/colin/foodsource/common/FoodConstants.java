@@ -60,4 +60,24 @@ public class FoodConstants {
      * 操作状态：成功
      */
     public static final int STATE_SUCCESS_200 = 200;
+
+    /**
+     * redis缓存时间
+     */
+    public static final long REDIS_EXPIRATION_SECONDS = 30 * 60;
+
+    /**
+     * 操作状态：权限未认证
+     */
+    public static final int STATE_NOT_AUTH_401 = 401;
+
+    /**
+     * 前端token key值
+     */
+    public static final String AUTHORIZATION = "authStr";
+
+    /**
+     * 用户编号字符串
+     */
+    public static final String CURRENT_USER_ID = "userId";
 }
