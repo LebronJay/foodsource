@@ -1,6 +1,7 @@
 package com.colin.foodsource.config;
 
 import com.colin.foodsource.common.interceptor.AuthHandlerInterceptor;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
@@ -13,7 +14,19 @@ public class WebConfig extends WebMvcConfigurationSupport{
 
     @Override
     protected void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(new AuthHandlerInterceptor()).addPathPatterns("/**");
+        registry.addInterceptor(authHandlerInterceptor()).addPathPatterns("/**");
         super.addInterceptors(registry);
+    }
+
+    /**
+    * 先创建拦截器实例再注册拦截器(防止拦截器中使用Autowired注入的对象为null)
+    * @param
+    * @return  com.colin.foodsource.common.interceptor.AuthHandlerInterceptor
+    * @author  Colin
+    * @date  2020/3/3 0003 上午 10:46
+    */
+    @Bean
+    public AuthHandlerInterceptor authHandlerInterceptor(){
+        return new AuthHandlerInterceptor();
     }
 }
