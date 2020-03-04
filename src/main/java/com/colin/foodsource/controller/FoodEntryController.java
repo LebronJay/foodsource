@@ -5,6 +5,8 @@ import com.colin.foodsource.exception.AppException;
 import com.colin.foodsource.model.FoodEntry;
 import com.colin.foodsource.service.FoodEntryService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.ExtendedModelMap;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -32,9 +34,11 @@ public class FoodEntryController {
      * @date 2020/2/24 0024 上午 10:03
      */
     @RequestMapping(value = "/addFoodEntry", method = RequestMethod.POST)
-    public String addFoodEntry(@RequestBody String json) throws IOException, AppException {
+    public Model addFoodEntry(@RequestBody String json) throws IOException, AppException {
+        Model model = new ExtendedModelMap();
         FoodEntry foodEntry = (FoodEntry) JackSonUtils.json2Object(json, FoodEntry.class);
         String result = foodEntryService.addFoodEntry(foodEntry);
-        return result;
+        model.addAttribute("result",result);
+        return model;
     }
 }
