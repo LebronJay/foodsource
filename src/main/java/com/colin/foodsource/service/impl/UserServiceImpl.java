@@ -1,7 +1,9 @@
 package com.colin.foodsource.service.impl;
 
 import com.colin.foodsource.common.FoodConstants;
+import com.colin.foodsource.common.model.TokenModel;
 import com.colin.foodsource.common.utils.RandomUtils;
+import com.colin.foodsource.common.utils.RedisTokenHelp;
 import com.colin.foodsource.dao.UserMapper;
 import com.colin.foodsource.exception.AppException;
 import com.colin.foodsource.model.User;
@@ -14,8 +16,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.ui.ExtendedModelMap;
-import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 
 import java.util.Date;
@@ -33,9 +33,12 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserMapper userMapper;
 
+    @Autowired
+    private RedisTokenHelp tokenHelp;
+
     @Override
-    public Model addUser(User user) throws AppException {
-        Model model = new ExtendedModelMap();
+    public String addUser(User user) throws AppException {
+        String result;
         String loginName = user.getLoginName();
         if(StringUtils.isEmpty(loginName)){
             throw new AppException("登录名称不能为空!");
@@ -48,11 +51,11 @@ public class UserServiceImpl implements UserService {
         user.setLastModDate(new Date());
         boolean addUser = userMapper.addUser(user);
         if (addUser) {
-            model.addAttribute("result", FoodConstants.SUCCESS);
+            result = FoodConstants.SUCCESS;
         } else {
-            model.addAttribute("result", FoodConstants.FAIL);
+            result = FoodConstants.FAIL;
         }
-        return model;
+        return result;
     }
 
     @Override
@@ -78,6 +81,9 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserInfo login(String loginName, String passwd) {
         UserInfo login = userMapper.login(loginName, passwd);
+        if(login != null){
+            TokenModel tokenModel = tokenHelp.create(login.getUserId());
+        }
         return login;
     }
 
@@ -101,25 +107,25 @@ public class UserServiceImpl implements UserService {
      * @author Colin
      * @date 2020/1/13 0013 下午 2:05
      */
-    public Model updateNewPassword(String userId, String newPassword, String oldPassword) {
-        Model model = new ExtendedModelMap();
+    public String updateNewPassword(String userId, String newPassword, String oldPassword) {
+        String result;
         String loginNameByUserId = userMapper.getLoginNameByUserId(userId);
         if (StringUtils.isEmpty(loginNameByUserId)) {
-            model.addAttribute("result",FoodConstants.NO_USER);
+            result = FoodConstants.NO_USER;
         } else {
             Integer userCount = countUserByIdAndPasswd(userId, oldPassword);
             if (userCount == null || userCount.intValue() == 0) {
-                model.addAttribute("result",FoodConstants.WRONG_PASSWORD);
+                result = FoodConstants.WRONG_PASSWORD;
             } else {
-                boolean result = updatePassword(userId, newPassword, oldPassword);
-                if (result) {
-                    model.addAttribute("result",FoodConstants.SUCCESS);
+                boolean isSuccess = updatePassword(userId, newPassword, oldPassword);
+                if (isSuccess) {
+                    result = FoodConstants.SUCCESS;
                 } else {
-                    model.addAttribute("result",FoodConstants.FAIL);
+                    result = FoodConstants.FAIL;
                 }
             }
         }
-        return model;
+        return result;
     }
 
     @Override
@@ -128,13 +134,21 @@ public class UserServiceImpl implements UserService {
         if (StringUtils.isEmpty(loginNameByUserId)) {
             return FoodConstants.NO_USER;
         }
-        String result = "";
         boolean delete = userMapper.deleteUserByUserId(userId);
         if (delete) {
-            result = FoodConstants.SUCCESS;
+            return FoodConstants.SUCCESS;
         } else {
-            result = FoodConstants.FAIL;
+            return FoodConstants.FAIL;
         }
-        return result;
+    }
+
+    @Override
+    public String logout(String userId){
+        boolean delete = tokenHelp.delete(userId);
+        if (delete){
+            return FoodConstants.SUCCESS;
+        }else{
+            return FoodConstants.FAIL;
+        }
     }
 }

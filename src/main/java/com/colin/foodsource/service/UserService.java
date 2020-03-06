@@ -5,7 +5,6 @@ import com.colin.foodsource.model.User;
 import com.colin.foodsource.model.view.UserInfo;
 import com.github.pagehelper.PageInfo;
 import org.apache.ibatis.annotations.Param;
-import org.springframework.ui.Model;
 
 import java.util.List;
 
@@ -23,7 +22,7 @@ public interface UserService {
      * @author Colin
      * @date 2020/1/15 0015 下午 1:39
      */
-    Model addUser(User user) throws AppException;
+    String addUser(User user) throws AppException;
 
     /**
      * 根据用户id获取登录名称
@@ -99,7 +98,7 @@ public interface UserService {
      * @author Colin
      * @date 2020/1/13 0013 下午 4:31
      */
-    Model updateNewPassword(String userId, String newPassword, String oldPassword);
+    String updateNewPassword(String userId, String newPassword, String oldPassword);
 
     /**
      * 根据用户id删除用户
@@ -110,4 +109,13 @@ public interface UserService {
      * @date 2020/1/15 0015 下午 1:39
      */
     String deleteUserByUserId(@Param("userId") String userId);
+
+    /**
+    * 登出
+    * @param userId
+    * @return  org.springframework.ui.Model
+    * @author  Colin
+    * @date  2020/2/28 0028 下午 5:37
+    */
+    String logout(String userId);
 }
