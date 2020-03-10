@@ -1,6 +1,6 @@
 package com.colin.foodsource.service.impl;
 
-import com.colin.foodsource.common.Constants;
+import com.colin.foodsource.common.FoodConstants;
 import com.colin.foodsource.common.utils.RandomUtils;
 import com.colin.foodsource.dao.ArticleMapper;
 import com.colin.foodsource.dao.UserMapper;
@@ -52,10 +52,15 @@ public class ArticleServiceImpl implements ArticleService{
         article.setLastModDate(new Date());
         boolean addArticle = articleMapper.addArticle(article);
         if (addArticle) {
-            result = Constants.SUCCESS;
+            result = FoodConstants.SUCCESS;
         } else {
-            result = Constants.FAIL;
+            result = FoodConstants.FAIL;
         }
         return result;
+    }
+
+    @Override
+    public String publishArticle(Article article) {
+        return null;
     }
 }
