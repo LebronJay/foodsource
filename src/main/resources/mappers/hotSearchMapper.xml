@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<!--热搜-->
+<mapper namespace="com.colin.foodsource.dao.HotSearchMapper">
+
+    <!--添加热搜-->
+    <insert id="addArticleLikeCollect" parameterType="com.colin.foodsource.model.HotSearch">
+
+    </insert>
+</mapper>
