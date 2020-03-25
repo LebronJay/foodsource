@@ -13,6 +13,7 @@ public class HomeArticle {
     private String articleTag;//标签
     private String oIdUser;//作者
     private Date publishDate;//发表时间
+    private String articleImgUrl;//图片
     private String articleContent;//内容
     private int skrNum;//点赞数
     private int collectionNum;//收藏数
@@ -97,5 +98,13 @@ public class HomeArticle {
 
     public void setIsCollection(String isCollection) {
         this.isCollection = isCollection;
+    }
+
+    public String getArticleImgUrl() {
+        return articleImgUrl;
+    }
+
+    public void setArticleImgUrl(String articleImgUrl) {
+        this.articleImgUrl = articleImgUrl;
     }
 }
