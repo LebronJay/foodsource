@@ -22,7 +22,7 @@ public interface UserService {
      * @author Colin
      * @date 2020/1/15 0015 下午 1:39
      */
-    String addUser(User user) throws AppException;
+    UserInfo addUser(User user) throws AppException;
 
     /**
      * 根据用户id获取登录名称

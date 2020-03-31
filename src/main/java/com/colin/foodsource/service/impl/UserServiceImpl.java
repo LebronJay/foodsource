@@ -16,6 +16,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import java.util.Date;
@@ -37,11 +38,16 @@ public class UserServiceImpl implements UserService {
     private RedisTokenHelp tokenHelp;
 
     @Override
-    public String addUser(User user) throws AppException {
+    @Transactional
+    public UserInfo addUser(User user) throws AppException {
         String result;
         String loginName = user.getLoginName();
+        String passwd = user.getPasswd();
         if(StringUtils.isEmpty(loginName)){
             throw new AppException("登录名称不能为空!");
+        }
+        if(StringUtils.isEmpty(passwd)){
+            throw new AppException("未输入密码!");
         }
         if (StringUtils.isEmpty(user.getPermission())) {
             user.setPermission("0");
@@ -51,11 +57,11 @@ public class UserServiceImpl implements UserService {
         user.setLastModDate(new Date());
         boolean addUser = userMapper.addUser(user);
         if (addUser) {
-            result = FoodConstants.SUCCESS;
+            UserInfo login = userMapper.login(loginName, passwd);
+            return login;
         } else {
-            result = FoodConstants.FAIL;
+            return null;
         }
-        return result;
     }
 
     @Override

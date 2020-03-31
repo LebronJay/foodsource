@@ -45,8 +45,8 @@ public class UserController {
     public Model addUser(@RequestBody String json) throws IOException, AppException {
         Model model = new ExtendedModelMap();
         User user = (User) JackSonUtils.json2Object(json, User.class);
-        String result = userService.addUser(user);
-        model.addAttribute("result", result);
+        UserInfo result = userService.addUser(user);
+        model.addAttribute("userInfo", result);
         return model;
     }
 
@@ -111,7 +111,10 @@ public class UserController {
     @NoneAuth
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public Model login(@RequestParam(value = "loginName", required = false) String loginName, @RequestParam(value = "passwd", required = false) String passwd) throws JsonProcessingException {
+//    public Model login(@RequestBody Map<String, Object> data) throws JsonProcessingException {
         Model model = new ExtendedModelMap();
+//        String loginName = data.get("loginName").toString();
+//        String passwd = data.get("passwd").toString();
         UserInfo userInfo = userService.login(loginName, passwd);
         if (userInfo != null) {
             model.addAttribute("token", tokenHelp.getToken(userInfo.getUserId()));
