@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<!--首页-->
+<mapper namespace="com.colin.foodsource.dao.HomeMapper">
+
+    <!--获取文章信息-->
+    <select id="getArticleList" parameterType="java.lang.String" resultType="com.colin.foodsource.model.view.HomeArticle">
+        select
+        user_id userId
+        from db_user order by input_date desc
+    </select>
+
+    <!--获取词条信息-->
+    <select id="getEntryList" parameterType="java.lang.String" resultType="com.colin.foodsource.model.view.HomeEntry">
+
+    </select>
+</mapper>

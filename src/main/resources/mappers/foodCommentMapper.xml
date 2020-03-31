@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<!--评论信息-->
+<mapper namespace="com.colin.foodsource.dao.FoodCommentMapper">
+
+    <!--添加评论-->
+    <insert id="addFoodComment" parameterType="com.colin.foodsource.model.FoodComment">
+
+    </insert>
+</mapper>
