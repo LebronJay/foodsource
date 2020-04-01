@@ -8,7 +8,6 @@ import java.util.Date;
  */
 public class ArticleLikeCollect {
 
-    private String articleLikeCollectId;//点赞收藏编号
     private String articleId;//评论编号
     private String likeState;//点赞状态
     private Date likeDate;//点赞时间
@@ -17,12 +16,10 @@ public class ArticleLikeCollect {
     private String oIdUser;//用户编号
     private String state;//状态
 
-    public String getArticleLikeCollectId() {
-        return articleLikeCollectId;
-    }
-
-    public void setArticleLikeCollectId(String articleLikeCollectId) {
-        this.articleLikeCollectId = articleLikeCollectId;
+    public ArticleLikeCollect(){
+        this.likeState = "0";
+        this.collectState = "0";
+        this.state = "0";
     }
 
     public String getArticleId() {
