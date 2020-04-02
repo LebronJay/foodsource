@@ -8,6 +8,38 @@
 
     <!--添加词条点赞收藏-->
     <insert id="addEntryLikeCollect" parameterType="com.colin.foodsource.model.EntryLikeCollect">
-
+        insert into op_entry_like_collect (
+        food_entry_id,
+        like_state,
+        like_date,
+        collect_state,
+        collect_date,
+        o_id_user,
+        state
+        )
+        VALUES (
+        #{foodEntryId,jdbcType=VARCHAR},
+        #{likeState,jdbcType=VARCHAR},
+        #{likeDate},
+        #{collectState,jdbcType=VARCHAR},
+        #{collectDate},
+        #{oIdUser,jdbcType=VARCHAR},
+        #{state,jdbcType=VARCHAR}
+        )
     </insert>
+
+    <!--是否存在用户点赞收藏的词条-->
+    <select id="isExistsData" resultType="java.lang.Integer">
+        select count(1) from op_entry_like_collect where food_entry_id = #{foodEntryId} and o_id_user = #{userId}
+    </select>
+
+    <!--更新点赞状态-->
+    <update id="updateLikeState">
+        update op_entry_like_collect set like_state = #{likeState},like_date = now(),state = '0' where food_entry_id = #{foodEntryId} and o_id_user = #{userId}
+    </update>
+
+    <!--更新收藏状态-->
+    <update id="updateCollectState">
+        update op_entry_like_collect set collect_state = #{collectState},collect_date = now(),state = '0' where food_entry_id = #{foodEntryId} and o_id_user = #{userId}
+    </update>
 </mapper>
