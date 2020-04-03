@@ -8,6 +8,38 @@
 
     <!--添加评论点赞收藏-->
     <insert id="addCommentLikeCollect" parameterType="com.colin.foodsource.model.CommentLikeCollect">
-
+        insert into op_comment_like_collect (
+        comment_id,
+        like_state,
+        like_date,
+        collect_state,
+        collect_date,
+        o_id_user,
+        state
+        )
+        VALUES (
+        #{commentId,jdbcType=VARCHAR},
+        #{likeState,jdbcType=VARCHAR},
+        #{likeDate},
+        #{collectState,jdbcType=VARCHAR},
+        #{collectDate},
+        #{oIdUser,jdbcType=VARCHAR},
+        #{state,jdbcType=VARCHAR}
+        )
     </insert>
+
+    <!--是否存在用户点赞收藏的评论-->
+    <select id="isExistsData" resultType="java.lang.Integer">
+        select count(1) from op_comment_like_collect where comment_id = #{commentId} and o_id_user = #{userId}
+    </select>
+
+    <!--更新点赞状态-->
+    <update id="updateLikeState">
+        update op_comment_like_collect set like_state = #{likeState},like_date = now(),state = '0' where comment_id = #{commentId} and o_id_user = #{userId}
+    </update>
+
+    <!--更新收藏状态-->
+    <update id="updateCollectState">
+        update op_comment_like_collect set collect_state = #{collectState},collect_date = now(),state = '0' where comment_id = #{commentId} and o_id_user = #{userId}
+    </update>
 </mapper>
