@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<!--评论信息-->
+<mapper namespace="com.colin.foodsource.dao.CommentMapper">
+
+    <!--添加评论-->
+    <insert id="addComment" parameterType="com.colin.foodsource.model.Comment">
+        insert into db_comment (
+        comment_id,
+        parent_id,
+        comment_content,
+        o_id_user,
+        input_date,
+        last_mod_date
+        )
+        VALUES (
+        #{commentId,jdbcType=VARCHAR},
+        #{parentId,jdbcType=VARCHAR},
+        #{commentContent,jdbcType=VARCHAR},
+        #{oIdUser,jdbcType=VARCHAR},
+        #{inputDate},
+        #{lastModDate}
+        )
+    </insert>
+
+    <!--评论是否存在-->
+    <select id="isExistsComment" resultType="java.lang.Integer">
+        select count(1) from db_comment where comment_id = #{commentId}
+    </select>
+
+    <!--评论对象是否存在-->
+    <select id="isExistsCommentObj" resultType="java.lang.Integer">
+        select sum(amount) from (
+        select count(1) amount from db_food_entry where food_entry_id = #{parentId}
+        UNION ALL
+        select count(1) amount from db_article where article_id = #{parentId}
+        UNION ALL
+        select count(1) amount from db_comment where comment_id = #{parentId}) a
+    </select>
+
+</mapper>
