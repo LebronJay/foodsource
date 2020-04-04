@@ -1,4 +1,3 @@
-```sql
 -- foodsource	3306	root root
 -- 用户表
 create table if not EXISTS db_user(
@@ -129,7 +128,6 @@ create table if not EXISTS op_entry_like_collect(
   collect_state char(1) default '0' not null comment '收藏；0:未收藏;1:收藏',
   collect_date datetime null comment '收藏时间',
   o_id_user varchar(32) not null comment '用户',
-
   state char(1) default '0' not null comment '状态；0:有效;1:无效',
 
   constraint pk_op_entry_like_collect primary key (food_entry_id,o_id_user)
@@ -151,7 +149,6 @@ create table if not EXISTS op_article_like_collect(
   collect_state char(1) default '0' not null comment '收藏；0:未收藏;1:收藏',
   collect_date datetime null comment '收藏时间',
   o_id_user varchar(32) not null comment '用户',
-
   state char(1) default '0' not null comment '状态；0:有效;1:无效',
 
   constraint pk_op_article_like_collect primary key (article_id,o_id_user)
