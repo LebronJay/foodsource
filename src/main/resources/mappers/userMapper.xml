@@ -104,4 +104,9 @@
     <delete id="deleteUserByUserId">
         delete from db_user where user_id = #{userId}
     </delete>
+
+    <!--用户是否存在-->
+    <select id="isExistsUser" resultType="java.lang.Integer">
+        select count(1) from db_user where user_id = #{userId}
+    </select>
 </mapper>

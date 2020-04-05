@@ -37,6 +37,13 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private RedisTokenHelp tokenHelp;
 
+    /**
+    * 添加用户
+    * @param user
+    * @return  com.colin.foodsource.model.view.UserInfo
+    * @author  Colin
+    * @date  2020/3/31 0031 下午 4:58
+    */
     @Override
     @Transactional
     public UserInfo addUser(User user) throws AppException {
@@ -64,18 +71,40 @@ public class UserServiceImpl implements UserService {
         }
     }
 
+    /**
+    * 根据用户id获取登录名称
+    * @param userId
+    * @return  java.lang.String
+    * @author  Colin
+    * @date  2020/3/31 0031 下午 4:59
+    */
     @Override
     public String getLoginNameByUserId(String userId) {
         String loginName = userMapper.getLoginNameByUserId(userId);
         return loginName;
     }
 
+    /**
+    * 获取所有用户
+    * @param
+    * @return  java.util.List<com.colin.foodsource.model.User>
+    * @author  Colin
+    * @date  2020/3/31 0031 下午 4:59
+    */
     @Override
     public List<User> getAllUser() {
         List<User> allUser = userMapper.getAllUser();
         return allUser;
     }
 
+    /**
+    * 分页查询用户信息
+    * @param pageNum
+    * @param pageSize
+    * @return  com.github.pagehelper.PageInfo<com.colin.foodsource.model.User>
+    * @author  Colin
+    * @date  2020/3/31 0031 下午 4:59
+    */
     @Override
     public PageInfo<User> getUserList(int pageNum, int pageSize) {
         Page<User> page = PageHelper.startPage(pageNum, pageSize);
@@ -84,6 +113,14 @@ public class UserServiceImpl implements UserService {
         return pageInfo;
     }
 
+    /**
+    * 登录
+    * @param loginName
+    * @param passwd
+    * @return  com.colin.foodsource.model.view.UserInfo
+    * @author  Colin
+    * @date  2020/3/31 0031 下午 4:59
+    */
     @Override
     public UserInfo login(String loginName, String passwd) {
         UserInfo login = userMapper.login(loginName, passwd);
@@ -93,11 +130,28 @@ public class UserServiceImpl implements UserService {
         return login;
     }
 
+    /**
+    * 修改密码
+    * @param userId
+    * @param newPassword
+    * @param oldPassword
+    * @return  boolean
+    * @author  Colin
+    * @date  2020/3/31 0031 下午 5:00
+    */
     @Override
     public boolean updatePassword(String userId, String newPassword, String oldPassword) {
         return userMapper.updatePassword(userId, newPassword, oldPassword);
     }
 
+    /**
+    * 根据用户ID和密码查询用户是否存在
+    * @param userId
+    * @param passwd
+    * @return  java.lang.Integer
+    * @author  Colin
+    * @date  2020/3/31 0031 下午 5:00
+    */
     @Override
     public Integer countUserByIdAndPasswd(String userId, String passwd) {
         return userMapper.countUserByIdAndPasswd(userId, passwd);
@@ -134,6 +188,13 @@ public class UserServiceImpl implements UserService {
         return result;
     }
 
+    /**
+    * 根据用户id删除用户
+    * @param userId
+    * @return  java.lang.String
+    * @author  Colin
+    * @date  2020/3/31 0031 下午 5:00
+    */
     @Override
     public String deleteUserByUserId(String userId) {
         String loginNameByUserId = userMapper.getLoginNameByUserId(userId);
@@ -148,6 +209,13 @@ public class UserServiceImpl implements UserService {
         }
     }
 
+    /**
+    * 登出
+    * @param userId
+    * @return  java.lang.String
+    * @author  Colin
+    * @date  2020/3/31 0031 下午 5:01
+    */
     @Override
     public String logout(String userId){
         boolean delete = tokenHelp.delete(userId);

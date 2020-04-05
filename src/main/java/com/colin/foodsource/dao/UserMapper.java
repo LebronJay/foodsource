@@ -89,4 +89,14 @@ public interface UserMapper {
      * @date 2020/1/15 0015 下午 1:37
      */
     boolean deleteUserByUserId(@Param("userId") String userId);
+
+    /**
+     * 用户是否存在
+     *
+     * @param userId
+     * @return java.lang.Integer
+     * @author Colin
+     * @date 2020/4/1 0001 下午 4:23
+     */
+    Integer isExistsUser(String userId);
 }
