@@ -41,4 +41,20 @@
         #{lastModDate}
         )
     </insert>
+
+    <!--根据文章编号获取文章信息-->
+    <select id="getArticleById" resultType="com.colin.foodsource.model.Article">
+        select * from db_article where article_id = #{articleId} and state = '0'
+    </select>
+
+    <!--发表文章-->
+    <update id="publishArticle">
+        update db_article set article_state = '1' where article_id = #{articleId} and state = '0'
+    </update>
+
+    <!--文章是否存在-->
+    <select id="isExistsArticle" resultType="java.lang.Integer">
+        select count(1) from db_article where article_id = #{articleId}
+    </select>
+
 </mapper>

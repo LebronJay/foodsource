@@ -33,12 +33,12 @@ public class ArticleController {
      * @author Colin
      * @date 2020/2/20 0020 上午 10:20
      */
-    @RequestMapping(value = "/addArticle", method = RequestMethod.POST)
-    public Model addArticle(@RequestBody String json) throws IOException, AppException {
+    @RequestMapping(value = "/backupNewArticle", method = RequestMethod.POST)
+    public Model backupNewArticle(@RequestBody String json) throws IOException, AppException {
         Model model = new ExtendedModelMap();
         Article article = (Article) JackSonUtils.json2Object(json, Article.class);
         String result = articleService.addArticle(article);
-        model.addAttribute("result",result);
+        model.addAttribute("articleId",result);
         return model;
     }
 

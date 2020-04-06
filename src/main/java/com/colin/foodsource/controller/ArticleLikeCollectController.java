@@ -23,6 +23,14 @@ public class ArticleLikeCollectController {
     @Autowired
     private ArticleLikeCollectService articleLikeCollectService;
 
+    /**
+     * 修改文章点赞状态
+     *
+     * @param data
+     * @return org.springframework.ui.Model
+     * @author Colin
+     * @date 2020/4/1 0001 下午 5:52
+     */
     @RequestMapping(value = "/updateLikeState", method = RequestMethod.POST)
     public Model updateLikeState(@RequestBody Map<String, Object> data) throws AppException {
         Model model = new ExtendedModelMap();
@@ -34,6 +42,14 @@ public class ArticleLikeCollectController {
         return model;
     }
 
+    /**
+     * 修改文章收藏状态
+     *
+     * @param data
+     * @return org.springframework.ui.Model
+     * @author Colin
+     * @date 2020/4/1 0001 下午 5:52
+     */
     @RequestMapping(value = "/updateCollectState", method = RequestMethod.POST)
     public Model updateCollectState(@RequestBody Map<String, Object> data) throws AppException {
         Model model = new ExtendedModelMap();

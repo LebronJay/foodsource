@@ -20,7 +20,7 @@ import java.util.Date;
  * Created by Colin on 2020/2/20 0020 上午 9:59.
  */
 @Service
-public class ArticleServiceImpl implements ArticleService{
+public class ArticleServiceImpl implements ArticleService {
 
     protected Logger logger = LoggerFactory.getLogger(ArticleServiceImpl.class);
 
@@ -30,37 +30,79 @@ public class ArticleServiceImpl implements ArticleService{
     @Autowired
     private UserMapper userMapper;
 
+    /**
+     * 添加文章
+     *
+     * @param article
+     * @return java.lang.String
+     * @author Colin
+     * @date 2020/3/31 0031 下午 5:01
+     */
     @Override
     public String addArticle(Article article) throws AppException {
         String result = "";
         String userId = article.getoIdUser();
         String loginNameByUserId = userMapper.getLoginNameByUserId(userId);
-        if(StringUtils.isEmpty(loginNameByUserId)){
+        if (StringUtils.isEmpty(loginNameByUserId)) {
             throw new AppException("用户不存在，不能保存文章信息！");
         }
-        if(StringUtils.isEmpty(article.getArticleTitle())){
+        if (StringUtils.isEmpty(article.getArticleTitle())) {
             throw new AppException("请输入文章标题！");
         }
-        if(StringUtils.isEmpty(article.getArticleContent())){
+        if (StringUtils.isEmpty(article.getArticleContent())) {
             throw new AppException("请输入文章内容！");
         }
-        if(StringUtils.isEmpty(article.getArticleState())){
+        if (StringUtils.isEmpty(article.getArticleState())) {
             article.setArticleState("0");
         }
-        article.setArticleId(RandomUtils.getUUID());
+        String articleId = RandomUtils.getUUID();
+        article.setArticleId(articleId);
         article.setInputDate(new Date());
         article.setLastModDate(new Date());
         boolean addArticle = articleMapper.addArticle(article);
         if (addArticle) {
-            result = FoodConstants.SUCCESS;
-        } else {
-            result = FoodConstants.FAIL;
+            return articleId;
         }
-        return result;
+        return null;
     }
 
+    /**
+     * 发布文章
+     *
+     * @param article
+     * @return java.lang.String
+     * @author Colin
+     * @date 2020/3/31 0031 下午 5:02
+     */
     @Override
-    public String publishArticle(Article article) {
-        return null;
+    public String publishArticle(Article article) throws AppException {
+        String articleId = article.getArticleId();
+        if (StringUtils.isEmpty(articleId)) {
+            article.setArticleState("1");
+            String addArticle = addArticle(article);
+            if (!StringUtils.isEmpty(addArticle)) {
+                return FoodConstants.SUCCESS;
+            }
+        } else {
+            boolean publishArticle = articleMapper.publishArticle(articleId);
+            if (publishArticle) {
+                return FoodConstants.SUCCESS;
+            }
+        }
+        return FoodConstants.FAIL;
+    }
+
+    /**
+     * 根据文章编号获取文章信息
+     *
+     * @param articleId
+     * @return com.colin.foodsource.model.Article
+     * @author Colin
+     * @date 2020/3/31 0031 下午 5:02
+     */
+    @Override
+    public Article getArticleById(String articleId) {
+        Article articleById = articleMapper.getArticleById(articleId);
+        return articleById;
     }
 }
