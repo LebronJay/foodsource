@@ -21,4 +21,14 @@ public interface FoodEntryMapper {
      * @date 2020/2/24 0024 上午 9:49
      */
     boolean addFoodEntry(FoodEntry foodEntry);
+
+    /**
+     * 词条是否存在
+     *
+     * @param foodEntryId
+     * @return java.lang.Integer
+     * @author Colin
+     * @date 2020/4/1 0001 下午 5:45
+     */
+    Integer isExistsEntry(String foodEntryId);
 }

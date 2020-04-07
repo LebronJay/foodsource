@@ -1,6 +1,5 @@
 package com.colin.foodsource.dao;
 
-import com.colin.foodsource.model.ArticleLikeCollect;
 import com.colin.foodsource.model.EntryLikeCollect;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -17,7 +16,7 @@ public interface EntryLikeCollectMapper {
     /**
      * 添加词条点赞收藏
      *
-     * @param articleLikeCollect
+     * @param entryLikeCollect
      * @return boolean
      * @author Colin
      * @date 2020/4/1 0001 下午 5:32
@@ -38,7 +37,7 @@ public interface EntryLikeCollectMapper {
     /**
      * 更新点赞状态
      *
-     * @param articleId
+     * @param foodEntryId
      * @param userId
      * @param likeState
      * @return boolean
@@ -50,7 +49,7 @@ public interface EntryLikeCollectMapper {
     /**
      * 更新收藏状态
      *
-     * @param articleId
+     * @param foodEntryId
      * @param userId
      * @param collectState
      * @return boolean

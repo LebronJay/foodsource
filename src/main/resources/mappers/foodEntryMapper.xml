@@ -57,4 +57,9 @@
         #{lastModDate}
         )
     </insert>
+
+    <!--词条是否存在-->
+    <select id="isExistsEntry" resultType="java.lang.Integer">
+        select count(1) from db_food_entry where food_entry_id = #{foodEntryId}
+    </select>
 </mapper>
