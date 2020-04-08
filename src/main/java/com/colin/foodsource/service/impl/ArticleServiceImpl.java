@@ -11,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import java.util.Date;
@@ -38,6 +39,7 @@ public class ArticleServiceImpl implements ArticleService {
      * @author Colin
      * @date 2020/3/31 0031 下午 5:01
      */
+    @Transactional
     @Override
     public String addArticle(Article article) throws AppException {
         String result = "";
@@ -74,6 +76,7 @@ public class ArticleServiceImpl implements ArticleService {
      * @author Colin
      * @date 2020/3/31 0031 下午 5:02
      */
+    @Transactional
     @Override
     public String publishArticle(Article article) throws AppException {
         String articleId = article.getArticleId();

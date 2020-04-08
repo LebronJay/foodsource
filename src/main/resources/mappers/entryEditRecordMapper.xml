@@ -8,6 +8,26 @@
 
     <!--添加词条编辑记录-->
     <insert id="addEntryEditRecord" parameterType="com.colin.foodsource.model.EntryEditRecord">
-
+        insert into op_entry_edit_record (
+        entry_edit_record_id,
+        food_entry_id,
+        edit_content,
+        edit_date,
+        o_id_user,
+        entry_state
+        )
+        VALUES (
+        #{entryEditRecordId,jdbcType=VARCHAR},
+        #{foodEntryId,jdbcType=VARCHAR},
+        #{editContent,jdbcType=VARCHAR},
+        #{editDate},
+        #{oIdUser,jdbcType=VARCHAR},
+        #{entryState,jdbcType=VARCHAR}
+        )
     </insert>
+
+    <!--提交记录-->
+    <update id="commitRecord">
+        update op_entry_edit_record set entry_state = '1' where entry_edit_record_id = #{entryEditRecordId}
+    </update>
 </mapper>
