@@ -24,16 +24,13 @@ import java.util.Map;
 @RequestMapping("/home")
 public class HomeController {
 
-    @Autowired
-    private HomeService homeService;
-
     /**
-    * 获取首页显示信息
-    * @param data
-    * @return  org.springframework.ui.Model
-    * @author  Colin
-    * @date  2020/3/25 0025 上午 10:14
-    */
+     * 获取首页显示信息
+     * @param data
+     * @return  org.springframework.ui.Model
+     * @author  Colin
+     * @date  2020/3/25 0025 上午 10:14
+     */
     @NoneAuth
     @RequestMapping(value = "/getHomeDetail", method = RequestMethod.POST)
     public Model getUserList(@RequestBody Map<String, Object> data) throws JsonProcessingException {
@@ -45,4 +42,7 @@ public class HomeController {
         model.addAttribute("entryList", entryList);
         return model;
     }
+
+    @Autowired
+    private HomeService homeService;
 }

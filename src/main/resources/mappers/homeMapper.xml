@@ -8,13 +8,66 @@
 
     <!--获取文章信息-->
     <select id="getArticleList" parameterType="java.lang.String" resultType="com.colin.foodsource.model.view.HomeArticle">
-        select
-        user_id userId
-        from db_user order by input_date desc
+        SELECT
+        db_article.article_id                                                                                 articleId,
+        db_article.article_title                                                                              articleTitle,
+        db_article.article_tag                                                                                articleTag,
+        db_article.o_id_user                                                                                  oIdUser,
+        db_article.publish_date                                                                               publishDate,
+        db_article.article_img1                                                                               articleImgUrl,
+        db_article.article_content                                                                            articleContent,
+        ifnull((SELECT sum(op_article_like_collect.o_id_user)
+        FROM op_article_like_collect
+        WHERE db_article.article_id = op_article_like_collect.article_id AND like_state = '1'), 0)    skrNum,
+        ifnull((SELECT sum(op_article_like_collect.o_id_user)
+        FROM op_article_like_collect
+        WHERE db_article.article_id = op_article_like_collect.article_id AND collect_state = '1'), 0) collectionNum,
+        ifnull((SELECT like_state
+        FROM op_article_like_collect
+        WHERE db_article.article_id = op_article_like_collect.article_id AND op_article_like_collect.o_id_user = #{userId}),
+        '0')                                                                                           isSkr,
+        ifnull((SELECT collect_state
+        FROM op_article_like_collect
+        WHERE db_article.article_id = op_article_like_collect.article_id AND op_article_like_collect.o_id_user = #{userId}),
+        '0')                                                                                           isCollection
+        FROM db_article
+        ORDER BY (SELECT sum(op_article_like_collect.o_id_user)
+        FROM op_article_like_collect
+        WHERE db_article.article_id = op_article_like_collect.article_id AND like_state = '1') DESC
+        LIMIT 8
     </select>
 
     <!--获取词条信息-->
     <select id="getEntryList" parameterType="java.lang.String" resultType="com.colin.foodsource.model.view.HomeEntry">
-
+        SELECT
+        db_food_entry.food_entry_id                                                                               foodEntryId,
+        db_food_entry.entry_name                                                                                  entryName,
+        db_food_entry.entry_tag                                                                                   entryTag,
+        db_food_entry.o_id_input                                                                                  oIdInput,
+        db_food_entry.input_date                                                                                  inputDate,
+        db_food_entry.entry_img1                                                                                  entryImgUrl,
+        db_food_entry.entry_content                                                                               entryContent,
+        ifnull((SELECT sum(op_entry_like_collect.o_id_user)
+        FROM op_entry_like_collect
+        WHERE db_food_entry.food_entry_id = op_entry_like_collect.food_entry_id AND like_state = '1'), 0) skrNum,
+        ifnull((SELECT sum(op_entry_like_collect.o_id_user)
+        FROM op_entry_like_collect
+        WHERE db_food_entry.food_entry_id = op_entry_like_collect.food_entry_id AND collect_state = '1'),
+        0)                                                                                                 collectionNum,
+        ifnull((SELECT like_state
+        FROM op_entry_like_collect
+        WHERE db_food_entry.food_entry_id = op_entry_like_collect.food_entry_id AND
+        op_entry_like_collect.o_id_user = #{userId}),
+        '0')                                                                                               isSkr,
+        ifnull((SELECT collect_state
+        FROM op_entry_like_collect
+        WHERE db_food_entry.food_entry_id = op_entry_like_collect.food_entry_id AND
+        op_entry_like_collect.o_id_user = #{userId}),
+        '0')                                                                                               isCollection
+        FROM db_food_entry
+        ORDER BY (SELECT sum(op_entry_like_collect.o_id_user)
+        FROM op_entry_like_collect
+        WHERE db_food_entry.food_entry_id = op_entry_like_collect.food_entry_id AND like_state = '1') DESC
+        LIMIT 8
     </select>
 </mapper>
