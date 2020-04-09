@@ -35,8 +35,8 @@ create table if not EXISTS db_food_entry(
   entry_introduction varchar(1000) null comment '简介',
   entry_history varchar(1000) null comment '历史文化',
   entry_content text null comment '内容',
-  entry_browse_count int default 0 not null comment '词条浏览数',
-  edit_count int default 0 not null comment '编辑次数',
+#   entry_browse_count int default 0 not null comment '词条浏览数',
+#   edit_count int default 0 not null comment '编辑次数',
   entry_img1 varchar(256) null comment '图片1',
   entry_img2 varchar(256) null comment '图片2',
   entry_img3 varchar(256) null comment '图片3',
@@ -47,6 +47,7 @@ create table if not EXISTS db_food_entry(
   input_date datetime null comment '录入时间',
   o_id_modify varchar(32) null comment '修改人',
   last_mod_date datetime null comment '修改时间',
+  entry_state char(1) default '0' not null comment '词条状态；0:保存;1:提交',
 
   constraint pk_db_food_entry primary key (food_entry_id)
 ) comment='菜品词条';
