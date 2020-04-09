@@ -24,6 +24,9 @@ import java.util.Map;
 @RequestMapping("/home")
 public class HomeController {
 
+    @Autowired
+    private HomeService homeService;
+
     /**
      * 获取首页显示信息
      * @param data
@@ -42,7 +45,4 @@ public class HomeController {
         model.addAttribute("entryList", entryList);
         return model;
     }
-
-    @Autowired
-    private HomeService homeService;
 }
