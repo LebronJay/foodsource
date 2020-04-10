@@ -21,7 +21,6 @@
         entry_introduction,
         entry_history,
         entry_content,
-        edit_count,
         entry_img1,
         entry_img2,
         entry_img3,
@@ -30,7 +29,8 @@
         o_id_input,
         input_date,
         o_id_modify,
-        last_mod_date
+        last_mod_date,
+        entry_state
         )
         VALUES (
         #{foodEntryId,jdbcType=VARCHAR},
@@ -45,7 +45,6 @@
         #{entryIntroduction,jdbcType=VARCHAR},
         #{entryHistory,jdbcType=VARCHAR},
         #{entryContent,jdbcType=VARCHAR},
-        #{editCount,jdbcType=INTEGER},
         #{entryImg1,jdbcType=VARCHAR},
         #{entryImg2,jdbcType=VARCHAR},
         #{entryImg3,jdbcType=VARCHAR},
@@ -54,7 +53,8 @@
         #{oIdInput,jdbcType=VARCHAR},
         #{inputDate},
         #{oIdModify,jdbcType=VARCHAR},
-        #{lastModDate}
+        #{lastModDate},
+        #{entryState,jdbcType=VARCHAR}
         )
     </insert>
 
@@ -62,4 +62,9 @@
     <select id="isExistsEntry" resultType="java.lang.Integer">
         select count(1) from db_food_entry where food_entry_id = #{foodEntryId}
     </select>
+
+    <!--提交词条-->
+    <update id="commitEntry">
+        update db_food_entry set entry_state = '1' where food_entry_id = #{foodEntryId}
+    </update>
 </mapper>

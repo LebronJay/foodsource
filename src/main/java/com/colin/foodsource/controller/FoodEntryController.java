@@ -19,7 +19,7 @@ import java.io.IOException;
  * Created by Colin on 2020/2/24 0024 上午 10:02.
  */
 @RestController
-@RequestMapping("/foodEntry")
+@RequestMapping("/entry")
 public class FoodEntryController {
 
     @Autowired
@@ -33,12 +33,29 @@ public class FoodEntryController {
      * @author Colin
      * @date 2020/2/24 0024 上午 10:03
      */
-    @RequestMapping(value = "/addFoodEntry", method = RequestMethod.POST)
-    public Model addFoodEntry(@RequestBody String json) throws IOException, AppException {
+    @RequestMapping(value = "/backupNewEntry", method = RequestMethod.POST)
+    public Model backupNewEntry(@RequestBody String json) throws IOException, AppException {
         Model model = new ExtendedModelMap();
         FoodEntry foodEntry = (FoodEntry) JackSonUtils.json2Object(json, FoodEntry.class);
-        String result = foodEntryService.addFoodEntry(foodEntry);
-        model.addAttribute("result",result);
+        String entryId = foodEntryService.addFoodEntry(foodEntry);
+        model.addAttribute("entryId", entryId);
+        return model;
+    }
+
+    /**
+     * 提交词条
+     *
+     * @param json
+     * @return org.springframework.ui.Model
+     * @author Colin
+     * @date 2020/4/9 0009 下午 5:00
+     */
+    @RequestMapping(value = "/commitEntry", method = RequestMethod.POST)
+    public Model commitEntry(@RequestBody String json) throws IOException, AppException {
+        Model model = new ExtendedModelMap();
+        FoodEntry foodEntry = (FoodEntry) JackSonUtils.json2Object(json, FoodEntry.class);
+        String result = foodEntryService.commitEntry(foodEntry);
+        model.addAttribute("result", result);
         return model;
     }
 }

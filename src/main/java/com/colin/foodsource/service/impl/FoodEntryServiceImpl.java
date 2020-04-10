@@ -11,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import java.util.Date;
@@ -20,7 +21,7 @@ import java.util.Date;
  * Created by Colin on 2020/2/24 0024 上午 9:52.
  */
 @Service
-public class FoodEntryServiceImpl implements FoodEntryService{
+public class FoodEntryServiceImpl implements FoodEntryService {
 
     protected Logger logger = LoggerFactory.getLogger(ArticleServiceImpl.class);
 
@@ -30,34 +31,61 @@ public class FoodEntryServiceImpl implements FoodEntryService{
     @Autowired
     private UserMapper userMapper;
 
+    @Transactional
     @Override
     public String addFoodEntry(FoodEntry foodEntry) throws AppException {
         String result = "";
         String userId = foodEntry.getoIdInput();
         String loginNameByUserId = userMapper.getLoginNameByUserId(userId);
-        if(StringUtils.isEmpty(loginNameByUserId)){
-            throw new AppException("用户不存在，不能保存文章信息！");
+        if (StringUtils.isEmpty(loginNameByUserId)) {
+            throw new AppException("用户不存在，不能保存词条信息！");
         }
-        if(StringUtils.isEmpty(foodEntry.getEntryName())){
+        if (StringUtils.isEmpty(foodEntry.getEntryName())) {
             throw new AppException("请输入菜品名称！");
         }
-        if(StringUtils.isEmpty(foodEntry.getEntryCuisine())){
+        if (StringUtils.isEmpty(foodEntry.getEntryCuisine())) {
             throw new AppException("请选择菜系！");
         }
-        if(StringUtils.isEmpty(foodEntry.getMainIngredients())){
+        if (StringUtils.isEmpty(foodEntry.getMainIngredients())) {
             throw new AppException("请选择主要食材！");
         }
-        if(foodEntry.getEditCount() == 0){
-            foodEntry.setEditCount(1);
+        if (StringUtils.isEmpty(foodEntry.getEntryState())) {
+            foodEntry.setEntryState("0");
         }
-        foodEntry.setFoodEntryId(RandomUtils.getUUID());
+        String entryId = RandomUtils.getUUID();
+        foodEntry.setFoodEntryId(entryId);
         foodEntry.setInputDate(new Date());
         boolean addFoodEntry = foodEntryMapper.addFoodEntry(foodEntry);
         if (addFoodEntry) {
-            result = FoodConstants.SUCCESS;
-        } else {
-            result = FoodConstants.FAIL;
+            return entryId;
         }
         return result;
+    }
+
+    /**
+     * 提交词条
+     *
+     * @param foodEntry
+     * @return java.lang.String
+     * @author Colin
+     * @date 2020/4/9 0009 下午 4:48
+     */
+    @Transactional
+    @Override
+    public String commitEntry(FoodEntry foodEntry) throws AppException {
+        String foodEntryId = foodEntry.getFoodEntryId();
+        if (StringUtils.isEmpty(foodEntryId)) {
+            foodEntry.setEntryState("1");
+            String entryId = addFoodEntry(foodEntry);
+            if (!StringUtils.isEmpty(entryId)) {
+                return FoodConstants.SUCCESS;
+            }
+        } else {
+            boolean result = foodEntryMapper.commitEntry(foodEntryId);
+            if (result) {
+                return FoodConstants.SUCCESS;
+            }
+        }
+        return FoodConstants.FAIL;
     }
 }

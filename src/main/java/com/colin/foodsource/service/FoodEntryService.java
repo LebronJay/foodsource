@@ -9,13 +9,7 @@ import com.colin.foodsource.model.FoodEntry;
  */
 public interface FoodEntryService {
 
-    /**
-     * 添加菜品词条
-     *
-     * @param foodEntry
-     * @return java.lang.String
-     * @author Colin
-     * @date 2020/2/24 0024 上午 9:51
-     */
     String addFoodEntry(FoodEntry foodEntry) throws AppException;
+
+    String commitEntry(FoodEntry foodEntry) throws AppException;
 }

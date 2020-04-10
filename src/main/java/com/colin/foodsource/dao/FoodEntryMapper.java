@@ -31,4 +31,14 @@ public interface FoodEntryMapper {
      * @date 2020/4/1 0001 下午 5:45
      */
     Integer isExistsEntry(String foodEntryId);
+
+    /**
+     * 提交词条
+     *
+     * @param foodEntryId
+     * @return boolean
+     * @author Colin
+     * @date 2020/4/9 0009 下午 4:46
+     */
+    boolean commitEntry(String foodEntryId);
 }

@@ -19,8 +19,6 @@ public class FoodEntry {
     private String entryIntroduction;//简介
     private String entryHistory;//历史文化
     private String entryContent;//内容
-    private int entryBrowseCount;//词条浏览数
-    private int editCount;//编辑次数
     private String entryImg1;//图片1
     private String entryImg2;//图片2
     private String entryImg3;//图片3
@@ -31,6 +29,7 @@ public class FoodEntry {
     private Date inputDate;//录入时间
     private String oIdModify;//修改人
     private Date lastModDate;//修改时间
+    private String entryState;//词条状态
 
     public String getFoodEntryId() {
         return foodEntryId;
@@ -128,22 +127,6 @@ public class FoodEntry {
         this.entryContent = entryContent;
     }
 
-    public int getEntryBrowseCount() {
-        return entryBrowseCount;
-    }
-
-    public void setEntryBrowseCount(int entryBrowseCount) {
-        this.entryBrowseCount = entryBrowseCount;
-    }
-
-    public int getEditCount() {
-        return editCount;
-    }
-
-    public void setEditCount(int editCount) {
-        this.editCount = editCount;
-    }
-
     public String getEntryImg1() {
         return entryImg1;
     }
@@ -222,5 +205,13 @@ public class FoodEntry {
 
     public void setLastModDate(Date lastModDate) {
         this.lastModDate = lastModDate;
+    }
+
+    public String getEntryState() {
+        return entryState;
+    }
+
+    public void setEntryState(String entryState) {
+        this.entryState = entryState;
     }
 }
