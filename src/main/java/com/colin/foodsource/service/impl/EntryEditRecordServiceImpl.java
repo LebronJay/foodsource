@@ -46,13 +46,22 @@ public class EntryEditRecordServiceImpl implements EntryEditRecordService {
     @Transactional
     @Override
     public String addEntryEditRecord(EntryEditRecord entryEditRecord) throws AppException {
-        Integer existsUser = userMapper.isExistsUser(entryEditRecord.getoIdUser());
+        Integer existsUser = userMapper.isExistsUser(entryEditRecord.getoIdInput());
         if (existsUser == null || existsUser.intValue() == 0) {
             throw new AppException("用户不存在！");
         }
         Integer existsEntry = foodEntryMapper.isExistsEntry(entryEditRecord.getFoodEntryId());
         if (existsEntry == null || existsEntry.intValue() == 0) {
             throw new AppException("词条不存在！");
+        }
+        if (StringUtils.isEmpty(entryEditRecord.getEntryName())) {
+            throw new AppException("请输入菜品名称！");
+        }
+        if (StringUtils.isEmpty(entryEditRecord.getEntryCuisine())) {
+            throw new AppException("请选择菜系！");
+        }
+        if (StringUtils.isEmpty(entryEditRecord.getMainIngredients())) {
+            throw new AppException("请选择主要食材！");
         }
         String recordId = RandomUtils.getUUID();
         entryEditRecord.setEntryEditRecordId(recordId);
