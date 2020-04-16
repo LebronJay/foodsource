@@ -31,9 +31,8 @@
         WHERE db_article.article_id = op_article_like_collect.article_id AND op_article_like_collect.o_id_user = #{userId}),
         '0')                                                                                           isCollection
         FROM db_article
-        ORDER BY (SELECT sum(op_article_like_collect.o_id_user)
-        FROM op_article_like_collect
-        WHERE db_article.article_id = op_article_like_collect.article_id AND like_state = '1') DESC
+        ORDER BY (SELECT sum(op_article_like_collect.o_id_user) FROM op_article_like_collect
+                    WHERE db_article.article_id = op_article_like_collect.article_id AND like_state = '1') DESC
         LIMIT 8
     </select>
 
@@ -65,9 +64,8 @@
         op_entry_like_collect.o_id_user = #{userId}),
         '0')                                                                                               isCollection
         FROM db_food_entry
-        ORDER BY (SELECT sum(op_entry_like_collect.o_id_user)
-        FROM op_entry_like_collect
-        WHERE db_food_entry.food_entry_id = op_entry_like_collect.food_entry_id AND like_state = '1') DESC
+        ORDER BY (SELECT sum(op_entry_like_collect.o_id_user) FROM op_entry_like_collect
+                    WHERE db_food_entry.food_entry_id = op_entry_like_collect.food_entry_id AND like_state = '1') DESC
         LIMIT 8
     </select>
 </mapper>
