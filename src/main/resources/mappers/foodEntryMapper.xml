@@ -67,4 +67,49 @@
     <update id="commitEntry">
         update db_food_entry set entry_state = '1' where food_entry_id = #{foodEntryId}
     </update>
+
+    <!--获取词条详细信息-->
+    <select id="getEntryDetail" resultType="com.colin.foodsource.model.view.EntryDetail">
+        SELECT
+        food_entry_id                                                                                             foodEntryId,
+        entry_name                                                                                                entryName,
+        entry_english_name                                                                                        entryEnglishName,
+        entry_tag                                                                                                 entryTag,
+        entry_taste                                                                                               entryTaste,
+        entry_cuisine                                                                                             entryCuisine,
+        main_ingredients                                                                                          mainIngredients,
+        make_way                                                                                                  makeWay,
+        common_area                                                                                               commonArea,
+        entry_introduction                                                                                        entryIntroduction,
+        entry_history                                                                                             entryHistory,
+        entry_content                                                                                             entryContent,
+        entry_img1                                                                                                entryImg1,
+        entry_img2                                                                                                entryImg1,
+        entry_img3                                                                                                entryImg1,
+        entry_img4                                                                                                entryImg1,
+        entry_img5                                                                                                entryImg1,
+        o_id_input                                                                                                oIdInput,
+        input_date                                                                                                inputDate,
+        o_id_modify                                                                                               oIdModify,
+        last_mod_date                                                                                             lastModDate,
+        ifnull((SELECT sum(op_entry_like_collect.o_id_user)
+        FROM op_entry_like_collect
+        WHERE db_food_entry.food_entry_id = op_entry_like_collect.food_entry_id AND like_state = '1'), 0) skrNum,
+        ifnull((SELECT sum(op_entry_like_collect.o_id_user)
+        FROM op_entry_like_collect
+        WHERE db_food_entry.food_entry_id = op_entry_like_collect.food_entry_id AND collect_state = '1'),
+        0)                                                                                                 collectionNum,
+        ifnull((SELECT like_state
+        FROM op_entry_like_collect
+        WHERE db_food_entry.food_entry_id = op_entry_like_collect.food_entry_id AND
+        op_entry_like_collect.o_id_user = #{userId}),
+        '0')                                                                                               isSkr,
+        ifnull((SELECT collect_state
+        FROM op_entry_like_collect
+        WHERE db_food_entry.food_entry_id = op_entry_like_collect.food_entry_id AND
+        op_entry_like_collect.o_id_user = #{userId}),
+        '0')                                                                                               isCollection
+        FROM db_food_entry
+        WHERE food_entry_id = #{foodEntryId}
+    </select>
 </mapper>

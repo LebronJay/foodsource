@@ -6,6 +6,7 @@ import com.colin.foodsource.dao.FoodEntryMapper;
 import com.colin.foodsource.dao.UserMapper;
 import com.colin.foodsource.exception.AppException;
 import com.colin.foodsource.model.FoodEntry;
+import com.colin.foodsource.model.view.EntryDetail;
 import com.colin.foodsource.service.FoodEntryService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -87,5 +88,23 @@ public class FoodEntryServiceImpl implements FoodEntryService {
             }
         }
         return FoodConstants.FAIL;
+    }
+
+    /**
+     * 获取词条详细信息
+     *
+     * @param foodEntryId
+     * @param userId
+     * @return com.colin.foodsource.model.view.EntryDetail
+     * @author Colin
+     * @date 2020/4/15 0015 下午 3:38
+     */
+    @Override
+    public EntryDetail getEntryDetail(String foodEntryId, String userId) throws AppException {
+        if (StringUtils.isEmpty(foodEntryId)) {
+            throw new AppException("词条编号不能为空！");
+        }
+        EntryDetail entryDetail = foodEntryMapper.getEntryDetail(foodEntryId, userId);
+        return entryDetail;
     }
 }

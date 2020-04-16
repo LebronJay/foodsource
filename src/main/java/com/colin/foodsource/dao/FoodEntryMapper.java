@@ -1,7 +1,9 @@
 package com.colin.foodsource.dao;
 
 import com.colin.foodsource.model.FoodEntry;
+import com.colin.foodsource.model.view.EntryDetail;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -41,4 +43,15 @@ public interface FoodEntryMapper {
      * @date 2020/4/9 0009 下午 4:46
      */
     boolean commitEntry(String foodEntryId);
+
+    /**
+     * 获取词条详细信息
+     *
+     * @param foodEntryId
+     * @param userId
+     * @return com.colin.foodsource.model.view.EntryDetail
+     * @author Colin
+     * @date 2020/4/15 0015 下午 3:33
+     */
+    EntryDetail getEntryDetail(@Param("foodEntryId") String foodEntryId, @Param("userId") String userId);
 }
