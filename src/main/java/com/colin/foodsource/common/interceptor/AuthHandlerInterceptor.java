@@ -41,7 +41,8 @@ public class AuthHandlerInterceptor implements HandlerInterceptor {
         //如果被@NoneAuth注解代表不需要登录验证，直接通过
         HandlerMethod handlerMethod = (HandlerMethod) handler;
         Method method = handlerMethod.getMethod();
-        if(method.getAnnotation(NoneAuth.class) != null) return true;
+        NoneAuth annotation = method.getAnnotation(NoneAuth.class);
+        if(annotation != null) return true;
         //token验证
         String authStr = request.getHeader(FoodConstants.AUTHORIZATION);
         TokenModel model = tokenHelper.get(authStr);
