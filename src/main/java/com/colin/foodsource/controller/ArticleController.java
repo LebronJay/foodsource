@@ -1,8 +1,10 @@
 package com.colin.foodsource.controller;
 
+import com.colin.foodsource.common.annotation.NoneAuth;
 import com.colin.foodsource.common.utils.JackSonUtils;
 import com.colin.foodsource.exception.AppException;
 import com.colin.foodsource.model.Article;
+import com.colin.foodsource.model.view.ArticleDetail;
 import com.colin.foodsource.service.ArticleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.ExtendedModelMap;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
+import java.util.Map;
 
 /**
  * @Description: 文章信息控制器
@@ -38,7 +41,7 @@ public class ArticleController {
         Model model = new ExtendedModelMap();
         Article article = (Article) JackSonUtils.json2Object(json, Article.class);
         String result = articleService.addArticle(article);
-        model.addAttribute("articleId",result);
+        model.addAttribute("articleId", result);
         return model;
     }
 
@@ -55,7 +58,26 @@ public class ArticleController {
         Model model = new ExtendedModelMap();
         Article article = (Article) JackSonUtils.json2Object(json, Article.class);
         String result = articleService.publishArticle(article);
-        model.addAttribute("result",result);
+        model.addAttribute("result", result);
+        return model;
+    }
+
+    /**
+     * 获取文章详细信息
+     *
+     * @param data
+     * @return org.springframework.ui.Model
+     * @author Colin
+     * @date 2020/4/16 0016 下午 5:05
+     */
+    @NoneAuth
+    @RequestMapping(value = "/getArticleDetail", method = RequestMethod.POST)
+    public Model getArticleDetail(@RequestBody Map<String, Object> data) throws AppException {
+        Model model = new ExtendedModelMap();
+        String userId = data.get("userId").toString();
+        String articleId = data.get("articleId").toString();
+        ArticleDetail articleDetail = articleService.getArticleDetail(articleId, userId);
+        model.addAttribute("articleDetail", articleDetail);
         return model;
     }
 }

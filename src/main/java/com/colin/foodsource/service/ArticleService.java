@@ -2,6 +2,7 @@ package com.colin.foodsource.service;
 
 import com.colin.foodsource.exception.AppException;
 import com.colin.foodsource.model.Article;
+import com.colin.foodsource.model.view.ArticleDetail;
 
 /**
  * @Description: 文章信息服务接口
@@ -14,4 +15,6 @@ public interface ArticleService {
     String publishArticle(Article article) throws AppException;
 
     Article getArticleById(String articleId);
+
+    ArticleDetail getArticleDetail(String articleId, String userId) throws AppException;
 }

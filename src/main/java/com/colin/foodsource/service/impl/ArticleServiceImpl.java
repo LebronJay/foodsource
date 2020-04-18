@@ -6,6 +6,7 @@ import com.colin.foodsource.dao.ArticleMapper;
 import com.colin.foodsource.dao.UserMapper;
 import com.colin.foodsource.exception.AppException;
 import com.colin.foodsource.model.Article;
+import com.colin.foodsource.model.view.ArticleDetail;
 import com.colin.foodsource.service.ArticleService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -107,5 +108,23 @@ public class ArticleServiceImpl implements ArticleService {
     public Article getArticleById(String articleId) {
         Article articleById = articleMapper.getArticleById(articleId);
         return articleById;
+    }
+
+    /**
+     * 获取文章详细信息
+     *
+     * @param articleId
+     * @param userId
+     * @return com.colin.foodsource.model.view.ArticleDetail
+     * @author Colin
+     * @date 2020/4/16 0016 下午 5:04
+     */
+    @Override
+    public ArticleDetail getArticleDetail(String articleId, String userId) throws AppException {
+        if (StringUtils.isEmpty(articleId)) {
+            throw new AppException("文章编号不能为空！");
+        }
+        ArticleDetail articleDetail = articleMapper.getArticleDetail(articleId, userId);
+        return articleDetail;
     }
 }

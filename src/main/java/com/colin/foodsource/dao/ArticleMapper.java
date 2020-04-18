@@ -1,7 +1,9 @@
 package com.colin.foodsource.dao;
 
 import com.colin.foodsource.model.Article;
+import com.colin.foodsource.model.view.ArticleDetail;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -51,4 +53,15 @@ public interface ArticleMapper {
      * @date 2020/4/1 0001 下午 4:14
      */
     Integer isExistsArticle(String articleId);
+
+    /**
+     * 获取文章详细信息
+     *
+     * @param articleId
+     * @param userId
+     * @return com.colin.foodsource.model.view.ArticleDetail
+     * @author Colin
+     * @date 2020/4/16 0016 下午 5:02
+     */
+    ArticleDetail getArticleDetail(@Param("articleId") String articleId, @Param("userId") String userId);
 }

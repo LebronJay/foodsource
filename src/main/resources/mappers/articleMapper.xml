@@ -57,4 +57,39 @@
         select count(1) from db_article where article_id = #{articleId}
     </select>
 
+    <!--获取文章详细信息-->
+    <select id="getArticleDetail" resultType="com.colin.foodsource.model.view.ArticleDetail">
+        SELECT
+        article_id                                                                                            articleId,
+        article_title                                                                                         articleTitle,
+        article_tag                                                                                           articleTag,
+        article_content                                                                                       articleContent,
+        o_id_user                                                                                             oIdUser,
+        publish_date                                                                                          publishDate,
+        article_img1                                                                                          articleImg1,
+        article_img2                                                                                          articleImg2,
+        article_img3                                                                                          articleImg3,
+        article_img4                                                                                          articleImg4,
+        article_img5                                                                                          articleImg5,
+        input_date                                                                                            inputDate,
+        last_mod_date                                                                                         lastModDate,
+        ifnull((SELECT sum(op_article_like_collect.o_id_user)
+        FROM op_article_like_collect
+        WHERE db_article.article_id = op_article_like_collect.article_id AND like_state = '1'), 0)    skrNum,
+        ifnull((SELECT sum(op_article_like_collect.o_id_user)
+        FROM op_article_like_collect
+        WHERE db_article.article_id = op_article_like_collect.article_id AND collect_state = '1'), 0) collectionNum,
+        ifnull((SELECT like_state
+        FROM op_article_like_collect
+        WHERE db_article.article_id = op_article_like_collect.article_id AND
+        op_article_like_collect.o_id_user = #{userId}),
+        '0')                                                                                           isSkr,
+        ifnull((SELECT collect_state
+        FROM op_article_like_collect
+        WHERE db_article.article_id = op_article_like_collect.article_id AND
+        op_article_like_collect.o_id_user = #{userId}),
+        '0')                                                                                           isCollection
+        FROM db_article where article_id = #{articleId}
+    </select>
+
 </mapper>
